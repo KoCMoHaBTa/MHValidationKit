@@ -24,6 +24,14 @@ public struct AnyValidator<V>: Validator {
         _validate = validator
     }
     
+    public init(@autoclosure(escaping) result: () -> Bool) {
+        
+        self.init { _ -> Bool in
+            
+            return result()
+        }
+    }
+    
     public init<T where T: Validator, T.Value == V>(validator: T) {
         
         self.init(validator: validator.validate)

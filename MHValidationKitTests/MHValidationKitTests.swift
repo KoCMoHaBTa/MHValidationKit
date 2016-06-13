@@ -31,15 +31,15 @@ class MHValidationKitTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
-        XCTAssertEqual((AnyValidator<String>(value: true) || AnyValidator<String>(value: true)).validate(nil), true || true)
-        XCTAssertEqual((AnyValidator<String>(value: true) || AnyValidator<String>(value: false)).validate(nil), true || false)
-        XCTAssertEqual((AnyValidator<String>(value: false) || AnyValidator<String>(value: true)).validate(nil), false || true)
-        XCTAssertEqual((AnyValidator<String>(value: false) || AnyValidator<String>(value: false)).validate(nil), false || false)
+        XCTAssertEqual((AnyValidator<String>(result: true) || AnyValidator<String>(result: true)).validate(nil), true || true)
+        XCTAssertEqual((AnyValidator<String>(result: true) || AnyValidator<String>(result: false)).validate(nil), true || false)
+        XCTAssertEqual((AnyValidator<String>(result: false) || AnyValidator<String>(result: true)).validate(nil), false || true)
+        XCTAssertEqual((AnyValidator<String>(result: false) || AnyValidator<String>(result: false)).validate(nil), false || false)
         
-        XCTAssertEqual((AnyValidator<String>(value: true) && AnyValidator<String>(value: true)).validate(nil), true && true)
-        XCTAssertEqual((AnyValidator<String>(value: true) && AnyValidator<String>(value: false)).validate(nil), true && false)
-        XCTAssertEqual((AnyValidator<String>(value: false) && AnyValidator<String>(value: true)).validate(nil), false && true)
-        XCTAssertEqual((AnyValidator<String>(value: false) && AnyValidator<String>(value: false)).validate(nil), false && false)
+        XCTAssertEqual((AnyValidator<String>(result: true) && AnyValidator<String>(result: true)).validate(nil), true && true)
+        XCTAssertEqual((AnyValidator<String>(result: true) && AnyValidator<String>(result: false)).validate(nil), true && false)
+        XCTAssertEqual((AnyValidator<String>(result: false) && AnyValidator<String>(result: true)).validate(nil), false && true)
+        XCTAssertEqual((AnyValidator<String>(result: false) && AnyValidator<String>(result: false)).validate(nil), false && false)
     }
 }
 
