@@ -49,6 +49,8 @@
 		99706E961D0EDCB5004B87C0 /* Validatable+ValidatorStylable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Validatable+ValidatorStylable.swift"; sourceTree = "<group>"; };
 		99706E981D0EDCC8004B87C0 /* Validatable+ValidatorContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Validatable+ValidatorContainer.swift"; sourceTree = "<group>"; };
 		99706E9A1D0EDCEB004B87C0 /* CollectionType+Validatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+Validatable.swift"; sourceTree = "<group>"; };
+		99706E9C1D0EDD9C004B87C0 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		99706E9D1D0EDD9C004B87C0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,8 @@
 		99706E621D0EDAAC004B87C0 = {
 			isa = PBXGroup;
 			children = (
+				99706E9D1D0EDD9C004B87C0 /* README.md */,
+				99706E9C1D0EDD9C004B87C0 /* LICENSE.md */,
 				99706E6E1D0EDAAC004B87C0 /* MHValidationKit */,
 				99706E7A1D0EDAAC004B87C0 /* MHValidationKitTests */,
 				99706E6D1D0EDAAC004B87C0 /* Products */,
