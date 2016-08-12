@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9939BD5F1D5DD9AB00E44E29 /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9939BD5E1D5DD9AB00E44E29 /* ValidationResult.swift */; };
 		99706E701D0EDAAC004B87C0 /* MHValidationKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99706E6F1D0EDAAC004B87C0 /* MHValidationKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99706E771D0EDAAC004B87C0 /* MHValidationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99706E6C1D0EDAAC004B87C0 /* MHValidationKit.framework */; };
 		99706E7C1D0EDAAC004B87C0 /* MHValidationKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99706E7B1D0EDAAC004B87C0 /* MHValidationKitTests.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9939BD5E1D5DD9AB00E44E29 /* ValidationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
 		99706E6C1D0EDAAC004B87C0 /* MHValidationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MHValidationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99706E6F1D0EDAAC004B87C0 /* MHValidationKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHValidationKit.h; sourceTree = "<group>"; };
 		99706E711D0EDAAC004B87C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				99706E6F1D0EDAAC004B87C0 /* MHValidationKit.h */,
 				99706E861D0EDABD004B87C0 /* MHValidationKit.swift */,
+				9939BD5E1D5DD9AB00E44E29 /* ValidationResult.swift */,
 				99706E881D0EDAF4004B87C0 /* Validator.swift */,
 				99706E8A1D0EDB13004B87C0 /* Validatable.swift */,
 				99706E8C1D0EDB2B004B87C0 /* ValueContainer.swift */,
@@ -228,6 +231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9939BD5F1D5DD9AB00E44E29 /* ValidationResult.swift in Sources */,
 				99706E971D0EDCB5004B87C0 /* Validatable+ValidatorStylable.swift in Sources */,
 				99706E911D0EDB92004B87C0 /* ValidatorContainer.swift in Sources */,
 				99706E991D0EDCC8004B87C0 /* Validatable+ValidatorContainer.swift in Sources */,
@@ -425,6 +429,7 @@
 				99706E821D0EDAAD004B87C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		99706E831D0EDAAD004B87C0 /* Build configuration list for PBXNativeTarget "MHValidationKitTests" */ = {
 			isa = XCConfigurationList;
@@ -433,6 +438,7 @@
 				99706E851D0EDAAD004B87C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -31,25 +31,84 @@ class MHValidationKitTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
-        XCTAssertEqual((AnyValidator<String>(result: true) || AnyValidator<String>(result: true)).validate(nil), true || true)
-        XCTAssertEqual((AnyValidator<String>(result: true) || AnyValidator<String>(result: false)).validate(nil), true || false)
-        XCTAssertEqual((AnyValidator<String>(result: false) || AnyValidator<String>(result: true)).validate(nil), false || true)
-        XCTAssertEqual((AnyValidator<String>(result: false) || AnyValidator<String>(result: false)).validate(nil), false || false)
+        XCTAssertEqual((AnyValidator<String>(result: true) || AnyValidator<String>(result: true)).validate(nil).boolValue, true || true)
+        XCTAssertEqual((AnyValidator<String>(result: true) || AnyValidator<String>(result: false)).validate(nil).boolValue, true || false)
+        XCTAssertEqual((AnyValidator<String>(result: false) || AnyValidator<String>(result: true)).validate(nil).boolValue, false || true)
+        XCTAssertEqual((AnyValidator<String>(result: false) || AnyValidator<String>(result: false)).validate(nil).boolValue, false || false)
         
-        XCTAssertEqual((AnyValidator<String>(result: true) && AnyValidator<String>(result: true)).validate(nil), true && true)
-        XCTAssertEqual((AnyValidator<String>(result: true) && AnyValidator<String>(result: false)).validate(nil), true && false)
-        XCTAssertEqual((AnyValidator<String>(result: false) && AnyValidator<String>(result: true)).validate(nil), false && true)
-        XCTAssertEqual((AnyValidator<String>(result: false) && AnyValidator<String>(result: false)).validate(nil), false && false)
+        XCTAssertEqual((AnyValidator<String>(result: true) && AnyValidator<String>(result: true)).validate(nil).boolValue, true && true)
+        XCTAssertEqual((AnyValidator<String>(result: true) && AnyValidator<String>(result: false)).validate(nil).boolValue, true && false)
+        XCTAssertEqual((AnyValidator<String>(result: false) && AnyValidator<String>(result: true)).validate(nil).boolValue, false && true)
+        XCTAssertEqual((AnyValidator<String>(result: false) && AnyValidator<String>(result: false)).validate(nil).boolValue, false && false)
     }
-}
-
-extension AnyValidator {
     
-    public init(@autoclosure(escaping) value: () -> Bool) {
+    func testSinglePairORValidatorMessages() {
+
+        //MARK: true || true -> A
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["A"]))
+         || AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["B"]))
+        )
+         .validate(nil).messages, ["A"])
         
-        self.init { _ -> Bool in
-            
-            return value()
-        }
+        //MARK: false || false -> B
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["A"]))
+         || AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["B"]))
+        )
+         .validate(nil).messages, ["B"])
+        
+        //MARK: true || false -> A
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["A"]))
+         || AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["B"]))
+        )
+         .validate(nil).messages, ["A"])
+        
+        //MARK: false || true -> B
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["A"]))
+         || AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["B"]))
+        )
+         .validate(nil).messages, ["B"])
+    }
+    
+    func testSinglePairANDValidatorMessages() {
+
+        //MARK: true && true -> B
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["A"]))
+         && AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["B"]))
+        )
+         .validate(nil).messages, ["B"])
+        
+        //MARK: false && false -> A
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["A"]))
+         && AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["B"]))
+        )
+         .validate(nil).messages, ["A"])
+        
+        //MARK: true && false -> B
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["A"]))
+         && AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["B"]))
+        )
+         .validate(nil).messages, ["B"])
+        
+        //MARK: false && true -> A
+        XCTAssertEqual(
+        (
+            AnyValidator<Void>(result: ValidationResult(valid: false, messages: ["A"]))
+         && AnyValidator<Void>(result: ValidationResult(valid: true, messages: ["B"]))
+        )
+         .validate(nil).messages, ["A"])
     }
 }
