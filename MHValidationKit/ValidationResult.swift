@@ -35,3 +35,4 @@ extension ValidationResult: BooleanLiteralConvertible {
         self.init(valid: value)
     }
 }
+

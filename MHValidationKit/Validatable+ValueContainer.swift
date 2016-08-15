@@ -10,7 +10,7 @@ import Foundation
 
 extension Validatable where Self: ValueContainer {
     
-    public func validate<V where V: Validator, V.Value == Value>(validator: V) -> Bool {
+    public func validate<V where V: Validator, V.Value == Value>(validator: V) -> ValidationResult {
         
         return validator.validate(self.value)
     }

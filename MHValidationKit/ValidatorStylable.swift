@@ -10,5 +10,5 @@ import Foundation
 
 public protocol ValidatorStylable {
     
-    func updateValidationStyle(valid: Bool)
+    func updateValidationStyle(result: ValidationResult)
 }

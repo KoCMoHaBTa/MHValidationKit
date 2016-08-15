@@ -10,12 +10,12 @@ import Foundation
 
 extension Validatable where Self: ValueContainer, Self: ValidatorStylable {
     
-    public func validate<V where V: Validator, V.Value == Value>(validator: V) -> Bool {
+    public func validate<V where V: Validator, V.Value == Value>(validator: V) -> ValidationResult {
         
-        let valid = validator.validate(self.value)
+        let result = validator.validate(self.value)
         
-        self.updateValidationStyle(valid)
+        self.updateValidationStyle(result)
         
-        return valid
+        return result
     }
 }

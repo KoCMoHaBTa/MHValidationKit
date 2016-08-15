@@ -11,41 +11,80 @@ import Foundation
 //mimic that a colloection of validatable elements is a validatable
 extension CollectionType where Generator.Element: Validatable {
     
-    //true if all elements are valid
-    func validate<V where V: Validator, V.Value == Generator.Element.Value>(validator: V, evaluateAll: Bool = false) -> Bool {
+    /**
+     
+     Validates all emements in the receiver for a given validator.
+     
+     - parameter validator: The validator used to validate each element.
+     - parameter evaluateAll: true to continue evaluation after false result. Default to false. Example usage - if elements are stylable - you can continue validation in order to show approiate style for all elements.
+     - returns: true if all elements are valid.
+     
+     */
+    
+    func validate<V where V: Validator, V.Value == Generator.Element.Value>(validator: V, evaluateAll: Bool = false) -> ValidationResult {
         
-        var result = true
+        var boolValue = true
+        var messages = [String]()
         
-        for element in self {
+        self.forEach { (element) in
             
-            result = element.validate(validator) && result
+            let result = element.validate(validator)
+            boolValue = boolValue && result
+            messages = messages + result.messages
             
-            if evaluateAll && !result {
+            //if result is false and there is not need to evaluate all - stop evaluating
+            if !result && !evaluateAll {
                 
-                break
+                return
             }
         }
         
+        let result = ValidationResult(valid: boolValue, messages: messages)
         return result
     }
 }
 
 extension CollectionType where Generator.Element: Validatable, Generator.Element: ValidatorContainer {
     
-    func validate(evaluateAll: Bool = false) -> Bool {
+    /**
+     
+     Validates all emements in the receiver with their own validator.
+     
+     - parameter evaluateAll: true to continue evaluation after false result. Default to false. Example usage - if elements are stylable - you can continue validation in order to show approiate style for all elements.
+     - returns: true if all elements are valid.
+     
+     */
+    
+    func validate(evaluateAll: Bool = false) -> ValidationResult {
         
-        var result = true
+        var boolValue = true
+        var messages = [String]()
         
-        for element in self {
+        self.forEach { (element) in
             
-            result = element.validate(element.validator) && result
+            let result = element.validate()
+            boolValue = boolValue && result
+            messages = messages + result.messages
             
-            if evaluateAll && !result {
+            //if result is false and there is not need to evaluate all - stop evaluating
+            if !result && !evaluateAll {
                 
-                break
+                return
             }
         }
         
+        let result = ValidationResult(valid: boolValue, messages: messages)
         return result
     }
 }
+
+////evaluates an element with a validator with a given result
+//private func evaluateElement<E, V where E: Validatable, V: Validator, V.Value == E.Value>(element: E, validator: V, inout result: ValidationResult) {
+//    
+//    
+//}
+
+
+
+
+
