@@ -21,6 +21,7 @@
 		99706E971D0EDCB5004B87C0 /* Validatable+ValidatorStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99706E961D0EDCB5004B87C0 /* Validatable+ValidatorStylable.swift */; };
 		99706E991D0EDCC8004B87C0 /* Validatable+ValidatorContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99706E981D0EDCC8004B87C0 /* Validatable+ValidatorContainer.swift */; };
 		99706E9B1D0EDCEB004B87C0 /* CollectionType+Validatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99706E9A1D0EDCEB004B87C0 /* CollectionType+Validatable.swift */; };
+		99D0D6C81D6214AD007437D4 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D0D6C71D6214AD007437D4 /* Samples.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		99706E9A1D0EDCEB004B87C0 /* CollectionType+Validatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+Validatable.swift"; sourceTree = "<group>"; };
 		99706E9C1D0EDD9C004B87C0 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		99706E9D1D0EDD9C004B87C0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		99D0D6C71D6214AD007437D4 /* Samples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				99706E7B1D0EDAAC004B87C0 /* MHValidationKitTests.swift */,
+				99D0D6C71D6214AD007437D4 /* Samples.swift */,
 				99706E7D1D0EDAAD004B87C0 /* Info.plist */,
 			);
 			path = MHValidationKitTests;
@@ -250,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99706E7C1D0EDAAC004B87C0 /* MHValidationKitTests.swift in Sources */,
+				99D0D6C81D6214AD007437D4 /* Samples.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
