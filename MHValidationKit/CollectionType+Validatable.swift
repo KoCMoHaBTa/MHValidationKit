@@ -26,7 +26,7 @@ extension CollectionType where Generator.Element: Validatable {
         var boolValue = true
         var messages = [String]()
         
-        self.forEach { (element) in
+        for element in self {
             
             let result = element.validate(validator)
             boolValue = boolValue && result
@@ -35,7 +35,7 @@ extension CollectionType where Generator.Element: Validatable {
             //if result is false and there is not need to evaluate all - stop evaluating
             if !result && !evaluateAll {
                 
-                return
+                break
             }
         }
         
@@ -60,7 +60,7 @@ extension CollectionType where Generator.Element: Validatable, Generator.Element
         var boolValue = true
         var messages = [String]()
         
-        self.forEach { (element) in
+        for element in self {
             
             let result = element.validate()
             boolValue = boolValue && result
@@ -69,7 +69,7 @@ extension CollectionType where Generator.Element: Validatable, Generator.Element
             //if result is false and there is not need to evaluate all - stop evaluating
             if !result && !evaluateAll {
                 
-                return
+                break
             }
         }
         
