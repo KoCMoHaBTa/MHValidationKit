@@ -14,7 +14,7 @@ extension Validatable where Self: ValueContainer, Self: ValidatorStylable {
         
         let result = validator.validate(self.value)
         
-        self.updateValidationStyle(result)
+        self.style(result)
         
         return result
     }

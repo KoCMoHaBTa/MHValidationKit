@@ -10,5 +10,16 @@ import Foundation
 
 public protocol ValidatorStylable {
     
-    func updateValidationStyle(result: ValidationResult)
+    associatedtype Target
+    var validatorStyler: ValidatorStyler<Target>? { get }
+    func style(result: ValidationResult)
 }
+
+extension ValidatorStylable where Target == Self {
+    
+    public func style(result: ValidationResult) {
+        
+        self.validatorStyler?.style(self, result: result)
+    }
+}
+

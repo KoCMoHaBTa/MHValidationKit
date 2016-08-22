@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99257BCA1D6B4832003E92F2 /* NSObjectProtocol+ValidatorStylable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99257BC91D6B4832003E92F2 /* NSObjectProtocol+ValidatorStylable.swift */; };
+		992D3D941D6B18880021E1F8 /* ValidatorStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992D3D931D6B18880021E1F8 /* ValidatorStyler.swift */; };
 		9939BD5F1D5DD9AB00E44E29 /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9939BD5E1D5DD9AB00E44E29 /* ValidationResult.swift */; };
 		99706E701D0EDAAC004B87C0 /* MHValidationKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99706E6F1D0EDAAC004B87C0 /* MHValidationKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99706E771D0EDAAC004B87C0 /* MHValidationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99706E6C1D0EDAAC004B87C0 /* MHValidationKit.framework */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99257BC91D6B4832003E92F2 /* NSObjectProtocol+ValidatorStylable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObjectProtocol+ValidatorStylable.swift"; sourceTree = "<group>"; };
+		992D3D931D6B18880021E1F8 /* ValidatorStyler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidatorStyler.swift; sourceTree = "<group>"; };
 		9939BD5E1D5DD9AB00E44E29 /* ValidationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
 		99706E6C1D0EDAAC004B87C0 /* MHValidationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MHValidationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99706E6F1D0EDAAC004B87C0 /* MHValidationKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHValidationKit.h; sourceTree = "<group>"; };
@@ -109,7 +113,9 @@
 				99706E901D0EDB92004B87C0 /* ValidatorContainer.swift */,
 				99706E981D0EDCC8004B87C0 /* Validatable+ValidatorContainer.swift */,
 				99706E8E1D0EDB5C004B87C0 /* ValidatorStylable.swift */,
+				992D3D931D6B18880021E1F8 /* ValidatorStyler.swift */,
 				99706E961D0EDCB5004B87C0 /* Validatable+ValidatorStylable.swift */,
+				99257BC91D6B4832003E92F2 /* NSObjectProtocol+ValidatorStylable.swift */,
 				99706E9A1D0EDCEB004B87C0 /* CollectionType+Validatable.swift */,
 				99706E711D0EDAAC004B87C0 /* Info.plist */,
 			);
@@ -234,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99257BCA1D6B4832003E92F2 /* NSObjectProtocol+ValidatorStylable.swift in Sources */,
 				9939BD5F1D5DD9AB00E44E29 /* ValidationResult.swift in Sources */,
 				99706E971D0EDCB5004B87C0 /* Validatable+ValidatorStylable.swift in Sources */,
 				99706E911D0EDB92004B87C0 /* ValidatorContainer.swift in Sources */,
@@ -243,6 +250,7 @@
 				99706E8B1D0EDB13004B87C0 /* Validatable.swift in Sources */,
 				99706E8F1D0EDB5C004B87C0 /* ValidatorStylable.swift in Sources */,
 				99706E871D0EDABD004B87C0 /* MHValidationKit.swift in Sources */,
+				992D3D941D6B18880021E1F8 /* ValidatorStyler.swift in Sources */,
 				99706E951D0EDC87004B87C0 /* Validatable+ValueContainer.swift in Sources */,
 				99706E8D1D0EDB2B004B87C0 /* ValueContainer.swift in Sources */,
 			);
