@@ -9,6 +9,7 @@
 import Foundation
 import MHValidationKit
 
+
 extension UITextField: ValueContainer, Validatable, ValidatorStylable {
     
     public typealias Value = String
@@ -17,25 +18,10 @@ extension UITextField: ValueContainer, Validatable, ValidatorStylable {
         
         return self.text
     }
+}
+
+extension UIView: ValidatorStylable {
     
-    private static var validatorStylerKey = ""
-    public var validatorStyler: ValidatorStyler<UITextField>? {
-        
-        get {
-            
-            return objc_getAssociatedObject(self, &self.dynamicType.validatorStylerKey) as? ValidatorStyler<UITextField>
-        }
-        
-        set {
-            
-            objc_setAssociatedObject(self, &self.dynamicType.validatorStylerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-    
-    public func updateValidationStyle(result: ValidationResult) {
-        
-        self.validatorStyler?.style(self, valid: result.boolValue)
-    }
 }
 
 class NumericTextField: UITextField, ValidatorContainer {
@@ -55,17 +41,16 @@ extension UITextField {
             let textField = UITextField()
             
             textField.text = text
-            textField.validatorStyler = validatorStyler
+            textField.validatorStyler = ValidatorStyler(styler: { (target, valid) in
+                
+                target.backgroundColor = valid ? UIColor.greenColor() : UIColor.redColor()
+            })
+            
             textField.backgroundColor = nil
             
             
             return textField
         }
-        
-        static var validatorStyler = ValidatorStyler<UITextField>(styler: { (target, valid) in
-            
-            target.backgroundColor = valid ? UIColor.greenColor() : UIColor.redColor()
-        })
         
         static var validBackgroundColor = UIColor.greenColor()
         static var invalidBackgroundColor = UIColor.redColor()
@@ -81,39 +66,22 @@ extension NumericTextField {
             let textField = NumericTextField()
             
             textField.text = text
-            textField.validatorStyler = validatorStyler
+            textField.validatorStyler = ValidatorStyler(styler: { (target, valid) in
+                
+                target.backgroundColor = valid ? UIColor.greenColor() : UIColor.redColor()
+            })
             textField.backgroundColor = nil
             
             
             return textField
         }
         
-        static var validatorStyler = ValidatorStyler<UITextField>(styler: { (target, valid) in
-            
-            target.backgroundColor = valid ? UIColor.greenColor() : UIColor.redColor()
-        })
-        
         static var validBackgroundColor = UIColor.greenColor()
         static var invalidBackgroundColor = UIColor.redColor()
     }
 }
 
-public class ValidatorStyler<T> {
-    
-    public typealias Styler = (target: T, valid: Bool) -> Void
-    
-    private let _styler: Styler
-    
-    public init(styler: Styler) {
-        
-        _styler = styler
-    }
-    
-    public func style(target: T, valid: Bool) {
-        
-        _styler(target: target, valid: valid)
-    }
-}
+
 
 ///validate if input string is not empty
 struct EmptyStringValidator: Validator {

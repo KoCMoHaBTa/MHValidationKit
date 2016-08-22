@@ -274,5 +274,40 @@ class MHValidationKitTests: XCTestCase {
         XCTAssertEqual(data[1].backgroundColor, UITextField.Testable.validBackgroundColor)
         XCTAssertEqual(data[2].backgroundColor, UITextField.Testable.invalidBackgroundColor)
     }
+    
+    func testValidatorStylerReferences() {
+        
+        let button = UIButton()
+        let view = UIView()
+        let label = UILabel()
+        
+        button.validatorStyler = ValidatorStyler(styler: { (target, valid) in
+            
+            XCTAssertTrue(target === button)
+            XCTAssertTrue(valid)
+        })
+        
+        view.validatorStyler = ValidatorStyler(styler: { (target, valid) in
+            
+            XCTAssertTrue(target === view)
+            XCTAssertFalse(valid)
+        })
+        
+        label.validatorStyler = ValidatorStyler(styler: { (target, valid) in
+            
+            XCTAssertTrue(target === label)
+            XCTAssertTrue(valid)
+        })
+        
+        XCTAssertNotNil(button.validatorStyler)
+        XCTAssertNotNil(view.validatorStyler)
+        XCTAssertNotNil(label.validatorStyler)
+        
+        button.validatorStyler?.style(button, result: true)
+        view.validatorStyler?.style(view, result: false)
+        label.validatorStyler?.style(label, result: true)
+    }
 }
+
+
 
