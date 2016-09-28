@@ -12,5 +12,5 @@ public protocol Validatable {
     
     associatedtype Value
     
-    func validate<V where V: Validator, V.Value == Value>(validator: V) -> ValidationResult
+    func validate<V>(using validator: V) -> ValidationResult where V: Validator, V.Value == Value
 }

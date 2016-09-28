@@ -12,14 +12,14 @@ public protocol ValidatorStylable {
     
     associatedtype Target
     var validatorStyler: ValidatorStyler<Target>? { get }
-    func style(result: ValidationResult)
+    func style(for result: ValidationResult)
 }
 
 extension ValidatorStylable where Target == Self {
     
-    public func style(result: ValidationResult) {
+    public func style(for result: ValidationResult) {
         
-        self.validatorStyler?.style(self, result: result)
+        self.validatorStyler?.style(self, for: result)
     }
 }
 

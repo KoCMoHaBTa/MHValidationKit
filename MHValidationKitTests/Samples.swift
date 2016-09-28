@@ -9,8 +9,32 @@
 import Foundation
 import MHValidationKit
 
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-extension UITextField: ValueContainer, Validatable, ValidatorStylable {
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
+
+extension UIView: ValidatorStylable {
+    
+}
+
+extension UITextField: ValueContainer, Validatable {
     
     public typealias Value = String
     
@@ -18,10 +42,6 @@ extension UITextField: ValueContainer, Validatable, ValidatorStylable {
         
         return self.text
     }
-}
-
-extension UIView: ValidatorStylable {
-    
 }
 
 class NumericTextField: UITextField, ValidatorContainer {
@@ -36,14 +56,14 @@ extension UITextField {
     
     struct Testable {
         
-        static func create(text: String? = nil) -> UITextField {
+        static func create(_ text: String? = nil) -> UITextField {
             
             let textField = UITextField()
             
             textField.text = text
             textField.validatorStyler = ValidatorStyler(styler: { (target, valid) in
                 
-                target.backgroundColor = valid ? UIColor.greenColor() : UIColor.redColor()
+                target.backgroundColor = valid.boolValue ? UIColor.green : UIColor.red
             })
             
             textField.backgroundColor = nil
@@ -52,8 +72,8 @@ extension UITextField {
             return textField
         }
         
-        static var validBackgroundColor = UIColor.greenColor()
-        static var invalidBackgroundColor = UIColor.redColor()
+        static var validBackgroundColor = UIColor.green
+        static var invalidBackgroundColor = UIColor.red
     }
 }
 
@@ -61,14 +81,14 @@ extension NumericTextField {
     
     struct Testable {
         
-        static func create(text: String? = nil) -> NumericTextField {
+        static func create(_ text: String? = nil) -> NumericTextField {
             
             let textField = NumericTextField()
             
             textField.text = text
             textField.validatorStyler = ValidatorStyler(styler: { (target, valid) in
                 
-                target.backgroundColor = valid ? UIColor.greenColor() : UIColor.redColor()
+                target.backgroundColor = valid.boolValue ? UIColor.green : UIColor.red
             })
             textField.backgroundColor = nil
             
@@ -76,8 +96,8 @@ extension NumericTextField {
             return textField
         }
         
-        static var validBackgroundColor = UIColor.greenColor()
-        static var invalidBackgroundColor = UIColor.redColor()
+        static var validBackgroundColor = UIColor.green
+        static var invalidBackgroundColor = UIColor.red
     }
 }
 
@@ -88,10 +108,10 @@ struct EmptyStringValidator: Validator {
     
     static let invalidMessage = "The input must not be empty"
     
-    func validate(value: String?) -> ValidationResult {
+    func validate(_ value: String?) -> ValidationResult {
         
-        let valid = value?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).isEmpty == false
-        let messages = valid ? [] : [self.dynamicType.invalidMessage]
+        let valid = value?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty == false
+        let messages = valid ? [] : [type(of: self).invalidMessage]
         return ValidationResult(valid: valid, messages: messages)
     }
 }
@@ -99,7 +119,7 @@ struct EmptyStringValidator: Validator {
 ///validate if input string meets minimum char length
 struct StringLengthValidator: Validator {
     
-    static func invalidMessage(lenght: Int) -> String {
+    static func invalidMessage(_ lenght: Int) -> String {
         
         return "The input must be at least \(lenght) characters long"
     }
@@ -111,10 +131,10 @@ struct StringLengthValidator: Validator {
         self.lenght = lenght
     }
     
-    func validate(value: String?) -> ValidationResult {
+    func validate(_ value: String?) -> ValidationResult {
         
         let valid = value?.utf8.count >= self.lenght
-        let messages = valid ? [] : [self.dynamicType.invalidMessage(self.lenght)]
+        let messages = valid ? [] : [type(of: self).invalidMessage(self.lenght)]
         return ValidationResult(valid: valid, messages: messages)
     }
 }
@@ -126,27 +146,27 @@ struct PasswordCharactersValidator: Validator {
     static let invalidMessageUpperCase = "The password must contains capital letters"
     static let invalidMessageNumbers = "The password must contains numbers"
     
-    func validate(value: String?) -> ValidationResult {
+    func validate(_ value: String?) -> ValidationResult {
         
         var valid = true
         var messages = [String]()
         
-        if value?.rangeOfCharacterFromSet(NSCharacterSet.lowercaseLetterCharacterSet()) == nil {
+        if value?.rangeOfCharacter(from: CharacterSet.lowercaseLetters) == nil {
             
             valid = false
-            messages.append(self.dynamicType.invalidMessageLowerCase)
+            messages.append(type(of: self).invalidMessageLowerCase)
         }
         
-        if value?.rangeOfCharacterFromSet(NSCharacterSet.uppercaseLetterCharacterSet()) == nil {
+        if value?.rangeOfCharacter(from: CharacterSet.uppercaseLetters) == nil {
             
             valid = false
-            messages.append(self.dynamicType.invalidMessageUpperCase)
+            messages.append(type(of: self).invalidMessageUpperCase)
         }
         
-        if value?.rangeOfCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet()) == nil {
+        if value?.rangeOfCharacter(from: CharacterSet.decimalDigits) == nil {
             
             valid = false
-            messages.append(self.dynamicType.invalidMessageNumbers)
+            messages.append(type(of: self).invalidMessageNumbers)
         }
         
         return ValidationResult(valid: valid, messages: messages)
@@ -163,9 +183,9 @@ struct SubstringValidator: Validator {
         self.substring = substring
     }
     
-    func validate(value: String?) -> ValidationResult {
+    func validate(_ value: String?) -> ValidationResult {
         
-        let valid = value?.containsString(self.substring) == true
+        let valid = value?.contains(self.substring) == true
         return ValidationResult(valid: valid)
     }
 }
@@ -175,10 +195,10 @@ struct NumericStringValidator: Validator {
     
     static let invalidMessage = "The input must contains only numbers"
     
-    func validate(value: String?) -> ValidationResult {
+    func validate(_ value: String?) -> ValidationResult {
         
-        let valid = value?.rangeOfCharacterFromSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet) == nil
-        let messages = valid ? [] : [self.dynamicType.invalidMessage]
+        let valid = value?.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+        let messages = valid ? [] : [type(of: self).invalidMessage]
         return ValidationResult(valid: valid, messages: messages)
     }
 }

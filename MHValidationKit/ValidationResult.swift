@@ -20,7 +20,8 @@ public struct ValidationResult {
     }
 }
 
-extension ValidationResult: BooleanType {
+//BooleanType protocol has dissapeared - but we still need this
+extension ValidationResult {
     
     public var boolValue: Bool {
         
@@ -28,7 +29,7 @@ extension ValidationResult: BooleanType {
     }
 }
 
-extension ValidationResult: BooleanLiteralConvertible {
+extension ValidationResult: ExpressibleByBooleanLiteral {
     
     public init(booleanLiteral value: Bool) {
         

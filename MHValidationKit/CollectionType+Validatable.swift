@@ -9,7 +9,7 @@
 import Foundation
 
 //mimic that a colloection of validatable elements is a validatable
-extension CollectionType where Generator.Element: Validatable {
+extension Collection where Iterator.Element: Validatable {
     
     /**
      
@@ -21,19 +21,19 @@ extension CollectionType where Generator.Element: Validatable {
      
      */
     
-    func validate<V where V: Validator, V.Value == Generator.Element.Value>(validator: V, evaluateAll: Bool = false) -> ValidationResult {
+    func validate<V>(using validator: V, evaluateAll: Bool = false) -> ValidationResult where V: Validator, V.Value == Iterator.Element.Value {
         
         var boolValue = true
         var messages = [String]()
         
         for element in self {
             
-            let result = element.validate(validator)
-            boolValue = boolValue && result
+            let result = element.validate(using: validator)
+            boolValue = boolValue && result.boolValue
             messages = messages + result.messages
             
             //if result is false and there is not need to evaluate all - stop evaluating
-            if !result && !evaluateAll {
+            if !result.boolValue && !evaluateAll {
                 
                 break
             }
@@ -44,7 +44,7 @@ extension CollectionType where Generator.Element: Validatable {
     }
 }
 
-extension CollectionType where Generator.Element: Validatable, Generator.Element: ValidatorContainer {
+extension Collection where Iterator.Element: Validatable, Iterator.Element: ValidatorContainer {
     
     /**
      
@@ -55,7 +55,7 @@ extension CollectionType where Generator.Element: Validatable, Generator.Element
      
      */
     
-    func validate(evaluateAll: Bool = false) -> ValidationResult {
+    func validate(byEvaluatingAll evaluateAll: Bool = false) -> ValidationResult {
         
         var boolValue = true
         var messages = [String]()
@@ -63,11 +63,11 @@ extension CollectionType where Generator.Element: Validatable, Generator.Element
         for element in self {
             
             let result = element.validate()
-            boolValue = boolValue && result
+            boolValue = boolValue && result.boolValue
             messages = messages + result.messages
             
             //if result is false and there is not need to evaluate all - stop evaluating
-            if !result && !evaluateAll {
+            if !result.boolValue && !evaluateAll {
                 
                 break
             }
