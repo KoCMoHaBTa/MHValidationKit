@@ -9,8 +9,11 @@
 import Foundation
 import MHValidationKit
 
+extension UIView: ValidatorStylable {
+    
+}
 
-extension UITextField: ValueContainer, Validatable, ValidatorStylable {
+extension UITextField: ValueContainer, Validatable {
     
     public typealias Value = String
     
@@ -18,10 +21,6 @@ extension UITextField: ValueContainer, Validatable, ValidatorStylable {
         
         return self.text
     }
-}
-
-extension UIView: ValidatorStylable {
-    
 }
 
 class NumericTextField: UITextField, ValidatorContainer {
