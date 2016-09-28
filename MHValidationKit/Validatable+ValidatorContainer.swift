@@ -12,6 +12,6 @@ extension Validatable where Self: ValidatorContainer {
     
     func validate() -> ValidationResult {
         
-        return self.validate(self.validator)
+        return self.validate(using: self.validator)
     }
 }

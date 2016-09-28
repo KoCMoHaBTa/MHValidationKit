@@ -117,7 +117,7 @@ class MHValidationKitTests: XCTestCase {
         let passwordValidator = EmptyStringValidator()
             && StringLengthValidator(8) && PasswordCharactersValidator() && AnyValidator(validator: { (value) -> ValidationResult in
                 
-                if value?.lowercaseString.containsString("milen") == true {
+                if value?.lowercased().contains("milen") == true {
                     
                     return ValidationResult(valid: false, messages: ["Your password cannot be the same as your username"])
                 }
@@ -127,25 +127,25 @@ class MHValidationKitTests: XCTestCase {
             && AnyValidator(result: ValidationResult(valid: true, messages: ["Valid Password"]))
         
         
-        XCTAssertFalse(passwordValidator.validate(""))
+        XCTAssertFalse(passwordValidator.validate("").boolValue)
         XCTAssertEqual(passwordValidator.validate("").messages.last, EmptyStringValidator.invalidMessage)
         
-        XCTAssertFalse(passwordValidator.validate("  "))
+        XCTAssertFalse(passwordValidator.validate("  ").boolValue)
         XCTAssertEqual(passwordValidator.validate("  ").messages.last, EmptyStringValidator.invalidMessage)
         
-        XCTAssertFalse(passwordValidator.validate("milen"))
+        XCTAssertFalse(passwordValidator.validate("milen").boolValue)
         XCTAssertEqual(passwordValidator.validate("milen").messages.last, StringLengthValidator.invalidMessage(8))
         
-        XCTAssertFalse(passwordValidator.validate("Milen123"))
+        XCTAssertFalse(passwordValidator.validate("Milen123").boolValue)
         XCTAssertEqual(passwordValidator.validate("Milen123").messages.last, "Your password cannot be the same as your username")
         
-        XCTAssertFalse(passwordValidator.validate("MilenABC"))
+        XCTAssertFalse(passwordValidator.validate("MilenABC").boolValue)
         XCTAssertEqual(passwordValidator.validate("MilenABC").messages.last, PasswordCharactersValidator.invalidMessageNumbers)
         
-        XCTAssertFalse(passwordValidator.validate("manqcheto"))
+        XCTAssertFalse(passwordValidator.validate("manqcheto").boolValue)
         XCTAssertEqual(passwordValidator.validate("manqcheto").messages, [PasswordCharactersValidator.invalidMessageUpperCase, PasswordCharactersValidator.invalidMessageNumbers])
         
-        XCTAssertTrue(passwordValidator.validate("QQbrbDQ9B7ENpy"))
+        XCTAssertTrue(passwordValidator.validate("QQbrbDQ9B7ENpy").boolValue)
         XCTAssertEqual(passwordValidator.validate("QQbrbDQ9B7ENpy").messages, ["Valid Password"])
     }
     
@@ -153,10 +153,10 @@ class MHValidationKitTests: XCTestCase {
         
         let textField = UITextField.Testable.create()
         
-        textField.validate(AnyValidator(result: true))
+        let _ = textField.validate(using: AnyValidator(result: true))
         XCTAssertEqual(textField.backgroundColor, UITextField.Testable.validBackgroundColor)
         
-        textField.validate(AnyValidator(result: false))
+        let _ = textField.validate(using: AnyValidator(result: false))
         XCTAssertEqual(textField.backgroundColor, UITextField.Testable.invalidBackgroundColor)
     }
     
@@ -172,9 +172,9 @@ class MHValidationKitTests: XCTestCase {
             UITextField.Testable.create("123")
         ]
         
-        let result = data.validate(StringLengthValidator(5) && NumericStringValidator(), evaluateAll: false)
+        let result = data.validate(using: StringLengthValidator(5) && NumericStringValidator(), evaluateAll: false)
         
-        XCTAssertFalse(result)
+        XCTAssertFalse(result.boolValue)
         XCTAssertEqual(result.messages.count, 1)
         
         XCTAssertEqual(data[0].backgroundColor, UITextField.Testable.validBackgroundColor)
@@ -197,9 +197,9 @@ class MHValidationKitTests: XCTestCase {
             UITextField.Testable.create("123c")
         ]
         
-        let result = data.validate(StringLengthValidator(5) && NumericStringValidator(), evaluateAll: true)
+        let result = data.validate(using: StringLengthValidator(5) && NumericStringValidator(), evaluateAll: true)
         
-        XCTAssertFalse(result)
+        XCTAssertFalse(result.boolValue)
         XCTAssertEqual(result.messages.count, 4)
         XCTAssertEqual(result.messages, [StringLengthValidator.invalidMessage(5), NumericStringValidator.invalidMessage, NumericStringValidator.invalidMessage, StringLengthValidator.invalidMessage(5)])
         
@@ -223,9 +223,9 @@ class MHValidationKitTests: XCTestCase {
             UITextField.Testable.create("123c")
         ]
         
-        let result = data.validate(NumericStringValidator() && StringLengthValidator(5), evaluateAll: true)
+        let result = data.validate(using: NumericStringValidator() && StringLengthValidator(5), evaluateAll: true)
         
-        XCTAssertFalse(result)
+        XCTAssertFalse(result.boolValue)
         XCTAssertEqual(result.messages.count, 4)
         XCTAssertEqual(result.messages, [StringLengthValidator.invalidMessage(5), NumericStringValidator.invalidMessage, NumericStringValidator.invalidMessage, NumericStringValidator.invalidMessage])
         
@@ -246,9 +246,9 @@ class MHValidationKitTests: XCTestCase {
             NumericTextField.Testable.create("asd123")
         ]
         
-        let result = data.validate(false)
+        let result = data.validate(byEvaluatingAll: false)
         
-        XCTAssertFalse(result)
+        XCTAssertFalse(result.boolValue)
         XCTAssertEqual(result.messages.count, 1)
         
         XCTAssertEqual(data[0].backgroundColor, UITextField.Testable.invalidBackgroundColor)
@@ -265,9 +265,9 @@ class MHValidationKitTests: XCTestCase {
             NumericTextField.Testable.create("asd123")
         ]
         
-        let result = data.validate(true)
+        let result = data.validate(byEvaluatingAll: true)
         
-        XCTAssertFalse(result)
+        XCTAssertFalse(result.boolValue)
         XCTAssertEqual(result.messages.count, 2)
         
         XCTAssertEqual(data[0].backgroundColor, UITextField.Testable.invalidBackgroundColor)
@@ -284,28 +284,28 @@ class MHValidationKitTests: XCTestCase {
         button.validatorStyler = ValidatorStyler(styler: { (target, valid) in
             
             XCTAssertTrue(target === button)
-            XCTAssertTrue(valid)
+            XCTAssertTrue(valid.boolValue)
         })
         
         view.validatorStyler = ValidatorStyler(styler: { (target, valid) in
             
             XCTAssertTrue(target === view)
-            XCTAssertFalse(valid)
+            XCTAssertFalse(valid.boolValue)
         })
         
         label.validatorStyler = ValidatorStyler(styler: { (target, valid) in
             
             XCTAssertTrue(target === label)
-            XCTAssertTrue(valid)
+            XCTAssertTrue(valid.boolValue)
         })
         
         XCTAssertNotNil(button.validatorStyler)
         XCTAssertNotNil(view.validatorStyler)
         XCTAssertNotNil(label.validatorStyler)
         
-        button.validatorStyler?.style(button, result: true)
-        view.validatorStyler?.style(view, result: false)
-        label.validatorStyler?.style(label, result: true)
+        button.validatorStyler?.style(button, for: true)
+        view.validatorStyler?.style(view, for: false)
+        label.validatorStyler?.style(label, for: true)
     }
 }
 

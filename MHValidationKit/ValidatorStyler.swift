@@ -8,19 +8,19 @@
 
 import Foundation
 
-public class ValidatorStyler<T> {
+open class ValidatorStyler<T> {
     
-    public typealias Styler = (target: T, result: ValidationResult) -> Void
+    public typealias Styler = (_ target: T, _ result: ValidationResult) -> Void
     
-    private let _styler: Styler
+    fileprivate let _styler: Styler
     
-    public init(styler: Styler) {
+    public init(styler: @escaping Styler) {
         
         _styler = styler
     }
     
-    public func style(target: T, result: ValidationResult) {
+    open func style(_ target: T, for result: ValidationResult) {
         
-        _styler(target: target, result: result)
+        _styler(target, result)
     }
 }

@@ -12,19 +12,19 @@ public protocol Validator {
     
     associatedtype Value
     
-    func validate(value: Value?) -> ValidationResult
+    func validate(_ value: Value?) -> ValidationResult
 }
 
 public struct AnyValidator<V>: Validator {
     
-    private let _validate: (value: V?) -> ValidationResult
+    private let _validate: (_ value: V?) -> ValidationResult
     
-    public init(validator: (value: V?) -> ValidationResult) {
+    public init(validator: @escaping (_ value: V?) -> ValidationResult) {
         
         _validate = validator
     }
     
-    public init(@autoclosure(escaping) result: () -> ValidationResult) {
+    public init( result: @autoclosure @escaping () -> ValidationResult) {
         
         self.init { _ -> ValidationResult in
             
@@ -32,21 +32,21 @@ public struct AnyValidator<V>: Validator {
         }
     }
     
-    public init<T where T: Validator, T.Value == V>(validator: T) {
+    public init<T>(validator: T) where T: Validator, T.Value == V {
         
         self.init(validator: validator.validate)
     }
     
-    public func validate(value: V?) -> ValidationResult {
+    public func validate(_ value: V?) -> ValidationResult {
         
-        return _validate(value: value)
+        return _validate(value)
     }
 }
 
 /// If `lhs` is `true`, return it.  Otherwise, evaluate `rhs` and
 /// return its `boolValue`.
-@warn_unused_result
-public func ||<LV, RV where LV: Validator, RV: Validator, LV.Value == RV.Value>(lhs: LV, rhs: RV) -> AnyValidator<LV.Value> {
+
+public func ||<LV, RV>(lhs: LV, rhs: RV) -> AnyValidator<LV.Value> where LV: Validator, RV: Validator, LV.Value == RV.Value {
     
     return AnyValidator(validator: { (value) -> ValidationResult in
         
@@ -63,8 +63,8 @@ public func ||<LV, RV where LV: Validator, RV: Validator, LV.Value == RV.Value>(
 
 /// If `lhs` is `false`, return it.  Otherwise, evaluate `rhs` and
 /// return its `boolValue`.
-@warn_unused_result
-public func &&<LV, RV where LV: Validator, RV: Validator, LV.Value == RV.Value>(lhs: LV, rhs: RV) -> AnyValidator<LV.Value> {
+
+public func &&<LV, RV>(lhs: LV, rhs: RV) -> AnyValidator<LV.Value> where LV: Validator, RV: Validator, LV.Value == RV.Value {
     
     return AnyValidator(validator: { (value) -> ValidationResult in
         
